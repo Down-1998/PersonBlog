@@ -54,61 +54,29 @@
             </div>
         </div>
         <div class="content_right">
-            <div class="right_module">
+            <div class="right_module" id="random_tasg">
                 <div>随机标签云</div>
-                <a href="/">树莓派</a>
-                <a href="/">C语言</a>
-                <a href="/">拟航天飞机</a>
-                <a href="/">php</a>
-                <a href="/">数据结构</a>
+                <a href="/" v-for="(item,index) in tags" :style="{color:randomColor(),fontSize:randomSize()}">{{item}}</a>
+
             </div>
-            <div class="right_module">
+            <div class="right_module" id="new_hot">
                 <div>最近热门</div>
                 <ul>
-                    <li>
-                        <a href="">使用码云git的webhook实现生产环境代</a>
+                    <li v-for="(item,index) in titleList" :key="index">
+                        <a :href="item.link">{{item.title}}</a>
                     </li>
-                    <li>
-                        <a href="">VirtualBox压缩vmdk、vagrant打包b</a>
-                    </li>
-                    <li>
-                        <a href="">初烧盲狙一条铁三角e40</a>
-                    </li>
-                    <li>
-                        <a href="">树莓派安装homebridge小记</a>
-                    </li>
+
                 </ul>
             </div>
-            <div class="right_module">
+            <div class="right_module" id="new_comments">
                 <div>最新评论</div>
                 <ul>
-                    <li>
+                    <li v-for="(item,index) in commentList" :key="index">
                         <div>
-                            <span>james</span>
-                            <span class="pull_right">[2个月前]</span>
+                            <span>{{item.name}}</span>
+                            <span class="pull_right">[{{item.date}}]</span>
                         </div>
-                        <p>在登录YouTube时一直显示手机号</p>
-                    </li>
-                    <li>
-                        <div>
-                            <span>james</span>
-                            <span class="pull_right">[2个月前]</span>
-                        </div>
-                        <p>在登录YouTube时一直显示手机号</p>
-                    </li>
-                    <li>
-                        <div>
-                            <span>james</span>
-                            <span class="pull_right">[2个月前]</span>
-                        </div>
-                        <p>在登录YouTube时一直显示手机号</p>
-                    </li>
-                    <li>
-                        <div>
-                            <span>james</span>
-                            <span class="pull_right">[2个月前]</span>
-                        </div>
-                        <p>在登录YouTube时一直显示手机号</p>
+                        <p>{{item.comment}}</p>
                     </li>
 
                 </ul>
@@ -141,6 +109,7 @@
         <p>Copyright © 2010-2021 郑晓个人博客 All rights reserved. 由免费开源的WordPress强力驱动. 鲁ICP备14017955号-1</p>
     </footer>
     <script src="./js/index.js"></script>
+    <script src="./js/base.js"></script>
 </body>
 
 </html>
