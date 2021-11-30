@@ -22,6 +22,17 @@
     <script>
         function submit() {
             let content = $('#editor').html();
+            $.ajax({
+                url: '/editEveryDay',
+                method: 'post',
+                data: content,
+                success: (res) => {
+                    console.log(res);
+                },
+                error: (err) => {
+                    console.log(err);
+                }
+            })
             alert(content)
         }
     </script>
