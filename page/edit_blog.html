@@ -21,10 +21,25 @@
     <script src="./bootstrap-wysiwyg-master/bootstrap-wysiwyg.js"></script>
     <script>
         function submit() {
-            alert('123')
+
             let content = $('#editor').html();
-            let title = $('#title').html();
-            let tags = $('#tags').html();
+            let title = $('#title').val();
+            let tags = $('#tags').val();
+
+            $.ajax({
+                url: `\editBlog?title=${title}&tags=${tags}`,
+                method: 'post',
+                data: content,
+                success: (res) => {
+                    console.log(res);
+                    let result = JSON.parse(res);
+                    alert(res.msg);
+                    $('#editor').html('');
+                },
+                error: (err) => {
+                    console.log(err);
+                }
+            })
         }
     </script>
     <style>
