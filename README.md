@@ -1,2 +1,2 @@
 # PersonBlog
-使用vue+nodejs+express搭建的个人博客
+使用vue+nodejs+express+mysql搭建的个人博客
