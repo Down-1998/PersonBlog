@@ -9,7 +9,15 @@ let everyDay = new Vue({
         }
     },
     created() {
-
+        axios({
+            method: 'get',
+            url: '/queryEveryDay'
+        }).then((res) => {
+            this.content = res.data.data[0].content
+            console.log(res.data.data[0].content);
+        }).catch((erro) => {
+            console.log('请求失败', erro);
+        })
     }
 });
 

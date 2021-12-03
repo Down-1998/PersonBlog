@@ -28,12 +28,15 @@
                 data: content,
                 success: (res) => {
                     console.log(res);
+                    let result = JSON.parse(res);
+                    alert(res.msg);
+                    $('#editor').html('');
                 },
                 error: (err) => {
                     console.log(err);
                 }
             })
-            alert(content)
+
         }
     </script>
     <style>
@@ -127,7 +130,7 @@
             </div>
 
             <div id="editor">
-                Go ahead&hellip;
+
             </div>
             <button onclick="submit()" class="submitBtn">提交</button>
         </div>
