@@ -7,6 +7,24 @@ const { request } = require('express');
 let url = require('url');
 let path = new Map();
 
+//分页查询博客
+function queryBlogByPage(request, response) {
+    let params = url.parse(request.url, true).query;
+    BlogDao.queryBlogByPage(parseInt(params.page), parseInt(params.pageSize), (result) => {
+        for (let i = 0; i < result.length; i++) {
+            console.log(result[i].content.substring(0, 300));
+            result[i].content = result[i].content.replace(/<img[\w\W]*">/, "");
+            result[i].content = result[i].content.replace(/<\/?.+?\/?>/g, '');
+            result[i].content = result[i].content.substring(0, 300);
+        }
+        response.writeHead(200);
+        response.write(respUtil.writeResult('success', '查询成功', result));
+        response.end();
+    });
+}
+
+path.set('/queryBlogByPage', queryBlogByPage);
+//编辑博客会进行插入标签和标签博客映射三张表
 function editBlog(request, response) {
     let params = url.parse(request.url, true).query;
     let tags = params.tags.replace(/ /g, "").replace('，', ',');
@@ -28,22 +46,27 @@ function editBlog(request, response) {
 }
 path.set('/editBlog', editBlog);
 
+//查询标签
 function queryTag(tag, blogId) {
     TagsDao.queryTag(tag, (result) => {
         if (result === null || result.length === 0) {
             insertTag(tag, blogId);
         } else {
-            TagBlogMapping.insertTagBlogMapping(result[0].id, blogId);
+            TagBlogMapping.insertTagBlogMapping(result[0].id, blogId, timeUtil.getNow(), timeUtil.getNow(), (result) => {
+
+            });
         }
     })
 }
 
+//插入标签
 function insertTag(tag, blogId) {
     TagsDao.insertTag(tag, timeUtil.getNow(), timeUtil.getNow(), (result) => {
         insertTagBlogMapping(result.insertId, blogId);
     })
 }
 
+//插入标签博客映射
 function insertTagBlogMapping(tagId, blogId) {
     TagBlogMapping.insertTagBlogMapping(tagId, blogId, timeUtil.getNow(), timeUtil.getNow(), (result) => {
 
