@@ -30,5 +30,21 @@ function queryBlogByPage(page, pageSize, success) {
     })
 }
 
+//查询博客总数
+function queryBlogCount(success) {
+    let querytSql = "select count(1) as count from blog ";
+    let params = [];
+    let connection = dbUtil.createConnection();
+    connection.connect();
+    connection.query(querytSql, params, (err, result) => {
+        if (err === null) {
+            success(result);
+        } else {
+            console.log(err);
+        }
+    })
+}
+
 module.exports.insertBlog = insertBlog;
 module.exports.queryBlogByPage = queryBlogByPage;
+module.exports.queryBlogCount = queryBlogCount;

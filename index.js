@@ -13,6 +13,8 @@ app.get('/queryEveryDay', loader.get('/queryEveryDay'))
 app.post('/editBlog', loader.get('/editBlog'));
 //分页查询博客
 app.get('/queryBlogByPage', loader.get('/queryBlogByPage'));
+//查询博客的数量
+app.get('/queryBlogCount', loader.get('/queryBlogCount'));
 
 app.listen(globalConfig.port, () => {
     console.log('服务器已经启动,正在监听12306端口');

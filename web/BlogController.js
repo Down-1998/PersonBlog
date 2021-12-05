@@ -7,12 +7,21 @@ const { request } = require('express');
 let url = require('url');
 let path = new Map();
 
+//查询博客总数
+function queryBlogCount(request, response) {
+    BlogDao.queryBlogCount((result) => {
+        response.writeHead(200);
+        response.write(respUtil.writeResult('success', '查询成功', result));
+        response.end();
+    })
+}
+path.set('/queryBlogCount', queryBlogCount);
+
 //分页查询博客
 function queryBlogByPage(request, response) {
     let params = url.parse(request.url, true).query;
     BlogDao.queryBlogByPage(parseInt(params.page), parseInt(params.pageSize), (result) => {
         for (let i = 0; i < result.length; i++) {
-            console.log(result[i].content.substring(0, 300));
             result[i].content = result[i].content.replace(/<img[\w\W]*">/, "");
             result[i].content = result[i].content.replace(/<\/?.+?\/?>/g, '');
             result[i].content = result[i].content.substring(0, 300);
