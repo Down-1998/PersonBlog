@@ -28,17 +28,7 @@ let articleList = new Vue({
         pageSize: 5,
         count: 100,
         pageNumList: [],
-        articleList: [{
-                title: 'Windows下使用zerotier时提示PORT_ERROR错误',
-                content: 'ZeroTier是一款基于P2P的内网穿透工具，对于个人免费且支持最多100台设备端对端穿透，看上去很优秀。出于爱折腾的兴趣，就安装试用一下。首先在官网注册帐号并创建一个虚拟网，得到虚拟网ID。然后下载Windows安装包，在Windows上一路确定安装完毕，点击运行，右键托盘图标选择join，填写上新建的虚拟网ID，进行加入。加入后点击”show networks”查看网络状态，发现Status为&...',
-                date: "2021-1-1",
-                views: "101",
-                tags: 'zerotier 内网穿透',
-                id: '1',
-                link: ''
-            }
-
-        ]
+        articleList: []
     },
     computed: {
         getPage(page, pageSize) {
@@ -58,7 +48,7 @@ let articleList = new Vue({
                         temp.views = result[i].views;
                         temp.tags = result[i].tags;
                         temp.id = result[i].id;
-                        temp.link = '' + result[i].id;
+                        temp.link = '/blog_detail.html?bid=' + result[i].id;
                         list.push(temp)
                     }
                     this.articleList = list;

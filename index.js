@@ -15,6 +15,12 @@ app.post('/editBlog', loader.get('/editBlog'));
 app.get('/queryBlogByPage', loader.get('/queryBlogByPage'));
 //查询博客的数量
 app.get('/queryBlogCount', loader.get('/queryBlogCount'));
+//按照博客id查询博客
+app.get('/queryBlogById', loader.get('/queryBlogById'));
+//添加评论
+app.get('/addComment', loader.get('/addComment'));
+//验证码
+app.get('/queryRandomCode', loader.get('/queryRandomCode'));
 
 app.listen(globalConfig.port, () => {
     console.log('服务器已经启动,正在监听12306端口');

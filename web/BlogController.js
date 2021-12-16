@@ -7,6 +7,17 @@ const { request } = require('express');
 let url = require('url');
 let path = new Map();
 
+//按照博客id查询博客
+function queryBlogById(request, response) {
+    let params = url.parse(request.url, true).query
+    BlogDao.queryBlogById(parseInt(params.bid), (result) => {
+        response.writeHead(200);
+        response.write(respUtil.writeResult('success', '查询成功', result));
+        response.end();
+    })
+}
+path.set('/queryBlogById', queryBlogById)
+
 //查询博客总数
 function queryBlogCount(request, response) {
     BlogDao.queryBlogCount((result) => {

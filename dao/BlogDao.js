@@ -30,6 +30,21 @@ function queryBlogByPage(page, pageSize, success) {
     })
 }
 
+//id查询博客
+function queryBlogById(id, success) {
+    let querySql = "select * from blog where id = ?;";
+    let params = [id];
+    let connection = dbUtil.createConnection();
+    connection.connect();
+    connection.query(querySql, params, (err, result) => {
+        if (err === null) {
+            success(result);
+        } else {
+            console.log(err);
+        }
+    })
+}
+
 //查询博客总数
 function queryBlogCount(success) {
     let querytSql = "select count(1) as count from blog ";
@@ -48,3 +63,4 @@ function queryBlogCount(success) {
 module.exports.insertBlog = insertBlog;
 module.exports.queryBlogByPage = queryBlogByPage;
 module.exports.queryBlogCount = queryBlogCount;
+module.exports.queryBlogById = queryBlogById;
