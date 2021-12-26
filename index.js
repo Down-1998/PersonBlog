@@ -21,6 +21,10 @@ app.get('/queryBlogById', loader.get('/queryBlogById'));
 app.get('/addComment', loader.get('/addComment'));
 //验证码
 app.get('/queryRandomCode', loader.get('/queryRandomCode'));
+//查询留言
+app.get('/queryCommentsByBlogId', loader.get('/queryCommentsByBlogId'));
+//查询留言条数
+app.get('/queryCommentsCountByBlogId', loader.get('/queryCommentsCountByBlogId'));
 
 app.listen(globalConfig.port, () => {
     console.log('服务器已经启动,正在监听12306端口');

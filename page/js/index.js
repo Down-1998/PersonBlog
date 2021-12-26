@@ -102,3 +102,16 @@ let articleList = new Vue({
     }
 
 })
+
+let header = new Vue({
+    el: "#header",
+    methods: {
+        jumpToAbout() {
+            window.location.href = '/about.html'
+        },
+        jumpToGuestbook() {
+            console.log(1321231);
+            window.location.href = "/guestbook.html"
+        }
+    }
+})
