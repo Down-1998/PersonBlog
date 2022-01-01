@@ -25,6 +25,17 @@ app.get('/queryRandomCode', loader.get('/queryRandomCode'));
 app.get('/queryCommentsByBlogId', loader.get('/queryCommentsByBlogId'));
 //查询留言条数
 app.get('/queryCommentsCountByBlogId', loader.get('/queryCommentsCountByBlogId'));
+//查询所有的博客
+app.get('/queryAllBlog', loader.get('/queryAllBlog'));
+//查询随机标签云
+app.get('/queryRandomTags', loader.get('/queryRandomTags'));
+//最近热点
+app.get('/queryHotBlog', loader.get('/queryHotBlog'));
+// 最新评论
+app.get('/queryNewComments', loader.get('/queryNewComments'));
+//随机标签云进行过滤
+app.get('/queryByTag', loader.get('/queryByTag'));
+app.get('/queryByTagCount', loader.get('/queryByTagCount'));
 
 app.listen(globalConfig.port, () => {
     console.log('服务器已经启动,正在监听12306端口');

@@ -20,7 +20,20 @@ let randomTags = new Vue({
         }
     },
     created() {
-
+        axios({
+            method:"get",
+            url:"/queryRandomTags"
+        }).then((res) => {
+            console.log(res,'========');
+            result = [];
+            for(let i = 0; i < res.data.data.length; i++){
+                result.push({
+                    text:res.data.data[i].tag,
+                    link: `/?tag=${res.data.data[i].tag}`
+                })
+            }
+            this.tags = result;
+        })
     }
 });
 
@@ -28,39 +41,23 @@ let randomTags = new Vue({
 let newHot = new Vue({
     el: '#new_hot',
     data: {
-        titleList: [{
-                title: '使用码云git的webhook实现生产环境代',
-                link: ''
-            },
-            {
-                title: 'VirtualBox压缩vmdk、vagrant打包b',
-                link: ''
-            },
-            {
-                title: '初烧盲狙一条铁三角e40',
-                link: ''
-            },
-            {
-                title: '树莓派安装homebridge小记',
-                link: ''
-            },
-            {
-                title: '使用码云git的webhook实现生产环境代',
-                link: ''
-            },
-            {
-                title: 'VirtualBox压缩vmdk、vagrant打包b',
-                link: ''
-            },
-            {
-                title: '初烧盲狙一条铁三角e40',
-                link: ''
-            },
-            {
-                title: '树莓派安装homebridge小记',
-                link: ''
+        titleList: []
+    },
+    created(){
+        axios({
+            method:"get",
+            url:"/queryHotBlog"
+        }).then((res) => {
+            let result = [];
+            for(let i = 0; i < res.data.data.length; i++){
+                let temp = {}
+                temp.title = res.data.data[i].title;
+                temp.link = `/blog_detail.html?bid=${res.data.data[i].id}`
+                result.push(temp);
             }
-        ]
+            this.titleList = result;
+            console.log(this.titleList);
+        })
     }
 
 })
@@ -107,5 +104,22 @@ let newComments = new Vue({
 
 
         ]
+    },
+    created(){
+        axios({
+            method:"get",
+            url:"/queryNewComments"
+        }).then((res) => {
+            console.log(res);
+            let result = [];
+            for(let i = 0; i < res.data.data.length; i++){
+                let temp = {}
+                temp.name = res.data.data[i].user_name;
+                temp.date = res.data.data[i].utime;
+                temp.comment = res.data.data[i].comments;
+                result.push(temp)
+            }
+            this.commentList = result;
+        })
     }
 })

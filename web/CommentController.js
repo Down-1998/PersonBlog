@@ -46,8 +46,18 @@ function queryCommentsCountByBlogId(request, response) {
         response.end();
     })
 }
+//查询最新评论
+function queryNewComments(request, response) {
+    CommentDao.queryNewComments(5, (result) => {
+        response.writeHead(200);
+        response.write(respUtil.writeResult('success', '查询留言条数成功', result));
+        response.end();
+    })
+}
+
 path.set('/queryCommentsCountByBlogId', queryCommentsCountByBlogId)
 path.set('/queryCommentsByBlogId', queryCommentsByBlogId)
 path.set('/addComment', addComment);
 path.set('/queryRandomCode', queryRandomCode);
+path.set('/queryNewComments', queryNewComments);
 module.exports.path = path;

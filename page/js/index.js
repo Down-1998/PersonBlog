@@ -33,37 +33,87 @@ let articleList = new Vue({
     computed: {
         getPage(page, pageSize) {
             return (page, pageSize) => {
-                axios({
-                    method: 'get',
-                    url: `/queryBlogByPage?page=${page - 1}&pageSize=${pageSize}`,
-                }).then((res) => {
-                    console.log(res);
-                    let result = res.data.data;
-                    let list = [];
-                    for (let i = 0; i < result.length; i++) {
-                        let temp = {};
-                        temp.title = result[i].title;
-                        temp.content = result[i].content;
-                        temp.date = result[i].ctime;
-                        temp.views = result[i].views;
-                        temp.tags = result[i].tags;
-                        temp.id = result[i].id;
-                        temp.link = '/blog_detail.html?bid=' + result[i].id;
-                        list.push(temp)
+                let searchUrlParams = location.search.indexOf('?') > -1 ? location.search.split('?')[1].split('&') : '';
+                // if (searchUrlParams == '') {
+                //     return
+                // }
+                let tag = "";
+                for (let i = 0; i < searchUrlParams.length; i++) {
+                    if (searchUrlParams[i].split('=')[0] == 'tag') {
+                        try {
+                            tag =searchUrlParams[i].split('=')[1]
+                        } catch (error) {
+                            console.log(error);
+                        }
                     }
-                    this.articleList = list;
-                    this.page = page
-
-                }).catch((err) => {
-                    console.log('请求错误');
-                })
-                axios({
-                    method: 'get',
-                    url: '/queryBlogCount'
-                }).then(res => {
-                    this.count = res.data.data[0].count;
-                    this.generatePageTool;
-                })
+                }
+                if(tag === ""){//不是查询情况
+                    axios({
+                        method: 'get',
+                        url: `/queryBlogByPage?page=${page - 1}&pageSize=${pageSize}`,
+                    }).then((res) => {
+                        console.log(res);
+                        let result = res.data.data;
+                        let list = [];
+                        for (let i = 0; i < result.length; i++) {
+                            let temp = {};
+                            temp.title = result[i].title;
+                            temp.content = result[i].content;
+                            temp.date = result[i].ctime;
+                            temp.views = result[i].views;
+                            temp.tags = result[i].tags;
+                            temp.id = result[i].id;
+                            temp.link = '/blog_detail.html?bid=' + result[i].id;
+                            list.push(temp)
+                        }
+                        this.articleList = list;
+                        this.page = page
+    
+                    }).catch((err) => {
+                        console.log('请求错误');
+                    })
+                    axios({
+                        method: 'get',
+                        url: '/queryBlogCount'
+                    }).then(res => {
+                        this.count = res.data.data[0].count;
+                        this.generatePageTool;
+                    })
+                }else{
+                    console.log(tag);
+                    axios({
+                        method: 'get',
+                        url: `/queryByTag?page=${page - 1}&pageSize=${pageSize}&tag=${tag}`,
+                    }).then((res) => {
+                        console.log(res,'======213234');
+                        let result = res.data.data;
+                        let list = [];
+                        for (let i = 0; i < result.length; i++) {
+                            let temp = {};
+                            temp.title = result[i].title;
+                            temp.content = result[i].content;
+                            temp.date = result[i].ctime;
+                            temp.views = result[i].views;
+                            temp.tags = result[i].tags;
+                            temp.id = result[i].id;
+                            temp.link = '/blog_detail.html?bid=' + result[i].id;
+                            list.push(temp)
+                        }
+                        this.articleList = list;
+                        this.page = page
+    
+                    }).catch((err) => {
+                        console.log('请求错误');
+                    })
+                    axios({
+                        method: 'get',
+                        url: `/queryByTagCount?tag=${tag}`,
+                    }).then(res => {
+                        this.count = res.data.data[0].count;
+                        this.generatePageTool;
+                    })
+                }
+                
 
 
             }

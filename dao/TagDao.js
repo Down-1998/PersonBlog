@@ -12,6 +12,7 @@ function insertTag(tag, ctime, utime, success) {
             console.log(err);
         }
     })
+    connection.end();
 }
 
 function queryTag(tag, success) {
@@ -26,7 +27,25 @@ function queryTag(tag, success) {
             console.log(err);
         }
     })
+    connection.end();
+}
+
+
+function queryAllTag( success) {
+    let insertSql = "select * from tags ;";
+    let params = [];
+    let connection = dbUtil.createConnection();
+    connection.connect();
+    connection.query(insertSql, params, (err, result) => {
+        if (err === null) {
+            success(result);
+        } else {
+            console.log(err);
+        }
+    })
+    connection.end();
 }
 
 module.exports.insertTag = insertTag
 module.exports.queryTag = queryTag
+module.exports.queryAllTag = queryAllTag
